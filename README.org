@@ -1,26 +1,25 @@
-#+title: Title (WIP)
+#+title: hl-regexp
+#+author: 8dcc
 #+options: toc:nil
 #+startup: showeverything
-#+author: 8dcc
 
-#+begin_comment
-*TODO*: Change project-name and title
-*TODO*: Change output.out in Makefile
-#+end_comment
-
-I am a short description.
-
-This project was generated from a template, and the initial changes have not
-been pushed yet.
+*Unix-like tool for highlighting a regular expression in text.*
 
 * Building
 
 Clone the repository and build the project using =make=.
 
 #+begin_src bash
-git clone https://github.com/8dcc/project-name
-cd project-name
+git clone https://github.com/8dcc/hl-regexp
+cd hl-regexp
 make
+# ...
+#+end_src
+
+You can install the program on your system with the =install= target.
+
+#+begin_src bash
+sudo make install
 # ...
 #+end_src
 
@@ -29,6 +28,9 @@ make
 For more information about the program, run it with the =--help= argument.
 
 #+begin_src bash
-./project-name.out --help
+./hl-regexp --help
+# Usage:
+#   ./hl-regexp [OPTION...] REGEXP < INPUT
+#
 # ...
 #+end_src
