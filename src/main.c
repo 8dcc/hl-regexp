@@ -42,6 +42,8 @@
     "  --after STR\n"                                                          \
     "      Specify the string that should be printed after each\n"             \
     "      regular expression match.\n\n"                                      \
+    "  -e, --extended-regexp\n"                                                \
+    "      Interpret REGEXP as an extended regular expression (ERE).\n\n"      \
     "  -i, --ignore-case\n"                                                    \
     "      Do not differentiate case.\n"
 
@@ -49,10 +51,11 @@
 #define COL_AFTER  "\x1B[0m"
 
 /* Globals modified by command-line arguments */
-static const char* g_regexp = NULL;
-static const char* g_before = COL_BEFORE;
-static const char* g_after  = COL_AFTER;
-static bool g_ignore_case   = false;
+static const char* g_regexp   = NULL;
+static const char* g_before   = COL_BEFORE;
+static const char* g_after    = COL_AFTER;
+static bool g_ignore_case     = false;
+static bool g_extended_regexp = false;
 
 /*----------------------------------------------------------------------------*/
 
@@ -104,6 +107,10 @@ print_usage:
                 }
 
                 g_after = argv[i];
+            } break;
+
+            case 'e': { /* Extended regexps */
+                g_extended_regexp = true;
             } break;
 
             case 'i': { /* Ignore case */
@@ -161,7 +168,9 @@ static bool get_match(const char* regexp, const char* str, size_t* start_idx,
     *start_idx = 0;
     *end_idx   = 0;
 
-    int cflags = REG_EXTENDED;
+    int cflags = 0;
+    if (g_extended_regexp)
+        cflags |= REG_EXTENDED;
     if (g_ignore_case)
         cflags |= REG_ICASE;
 
