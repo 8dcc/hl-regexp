@@ -7,13 +7,15 @@ SRC=main.c
 OBJ=$(addprefix obj/, $(addsuffix .o, $(SRC)))
 
 BIN=hl-regexp
+COMPLETION=hl-regexp-completion.bash
 
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
+COMPLETIONDIR=$(PREFIX)/share/bash-completion/completions
 
 #-------------------------------------------------------------------------------
 
-.PHONY: all clean
+.PHONY: all clean install install-bin install-completion
 
 all: $(BIN)
 
@@ -21,9 +23,13 @@ clean:
 	rm -f $(OBJ)
 	rm -f $(BIN)
 
-install: $(BIN)
-	mkdir -p $(BINDIR)
-	install -m 755 $^ $(DESTDIR)$(BINDIR)
+install: install-bin install-completion
+
+install-bin: $(BIN)
+	install -D -m 755 $^ -t $(DESTDIR)$(BINDIR)
+
+install-completion: $(COMPLETION)
+	install -D -m 644 $^ $(DESTDIR)$(COMPLETIONDIR)/$(BIN)
 
 #-------------------------------------------------------------------------------
 
