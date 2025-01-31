@@ -7,6 +7,7 @@ _hl_regexp_completion() {
         -b --before
         -a --after
         -i --ignore-case
+        -e --extended-regexp
     )
 
     # Check the the previous option ('$3') for special values or options.
