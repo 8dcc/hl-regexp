@@ -34,3 +34,12 @@ For more information about the program, run it with the =--help= argument.
 #
 # ...
 #+end_src
+
+* Useful regular expressions
+
+The following command can be used for highlighting TODO keywords. It might be
+useful along with my [[https://github.com/8dcc/print-todos][print-todos]] tool.
+
+#+begin_src bash
+cat file.txt | hl-regexp "DE\(BUG\|LME\)\|FIXME\|HACK\|REVIEW\|TODO"
+#+end_src
