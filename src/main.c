@@ -27,6 +27,7 @@
 
 /*----------------------------------------------------------------------------*/
 
+#define USAGE_FP stdout
 #define USAGE                                                                  \
     "Usage:\n"                                                                 \
     "  %s [OPTION...] REGEXP < INPUT\n\n"                                      \
@@ -47,6 +48,7 @@
 #define COL_BEFORE "\x1B[7m"
 #define COL_AFTER  "\x1B[0m"
 
+/* Globals modified by command-line arguments */
 static const char* g_regexp = NULL;
 static const char* g_before = COL_BEFORE;
 static const char* g_after  = COL_AFTER;
@@ -54,6 +56,10 @@ static bool g_ignore_case   = false;
 
 /*----------------------------------------------------------------------------*/
 
+/*
+ * TODO: Use 'getopt_long', see:
+ * https://www.gnu.org/software/libc/manual/html_node/Getopt.html
+ */
 static int parse_args(int argc, char** argv) {
     if (argc <= 1) {
         ERR("Not enough arguments, expected a REGEXP.");
@@ -76,7 +82,7 @@ static int parse_args(int argc, char** argv) {
         switch (arg[j]) {
             case 'h': { /* Help */
 print_usage:
-                fprintf(stderr, USAGE, argv[0]);
+                fprintf(USAGE_FP, USAGE, argv[0]);
                 return 1;
             }
 
