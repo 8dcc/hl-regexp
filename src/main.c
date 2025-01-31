@@ -190,6 +190,39 @@ static bool get_match(const char* regexp, const char* str, size_t* start_idx,
     return true;
 }
 
+static void print_highlighted_line(FILE* dst, const char* line,
+                                   const char* regexp) {
+    for (;;) {
+        size_t match_start, match_end;
+        if (!get_match(regexp, line, &match_start, &match_end)) {
+            /*
+             * No more matches left, print the remainder of the line without
+             * highlighting anything and stop.
+             */
+            fprintf(dst, "%s", line);
+            break;
+        }
+
+        /*
+         * We got a match, print the text before the match, the text for
+         * highlighting it, and the match text itself.
+         */
+        size_t i = 0;
+        while (i < match_start)
+            fputc(line[i++], dst);
+        printf("%s", g_before);
+        while (i < match_end)
+            fputc(line[i++], dst);
+        printf("%s", g_after);
+
+        /*
+         * Since the there might be more that one match per line, continue
+         * checking the remainder of the line on the next iteration.
+         */
+        line = &line[match_end];
+    }
+}
+
 /*----------------------------------------------------------------------------*/
 
 int main(int argc, char** argv) {
@@ -203,21 +236,7 @@ int main(int argc, char** argv) {
 
     char* line;
     while ((line = get_line(src)) != NULL) {
-        size_t match_start, match_end;
-        if (get_match(g_regexp, line, &match_start, &match_end)) {
-            size_t i = 0;
-            while (i < match_start)
-                fputc(line[i++], dst);
-            printf("%s", g_before);
-            while (i < match_end)
-                fputc(line[i++], dst);
-            printf("%s", g_after);
-            while (line[i] != '\0')
-                fputc(line[i++], dst);
-        } else {
-            fprintf(dst, "%s", line);
-        }
-
+        print_highlighted_line(dst, line, g_regexp);
         free(line);
     }
 
