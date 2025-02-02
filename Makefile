@@ -1,5 +1,8 @@
 
+VERSION="\"$(shell git describe --tags --abbrev=0) ($(shell git rev-parse --short HEAD))\""
+
 CC=gcc
+CPPFLAGS=-DVERSION=$(VERSION)
 CFLAGS=-std=c99 -Wall -Wextra -Wpedantic -ggdb3
 LDLIBS=
 
@@ -34,8 +37,8 @@ install-completion: $(COMPLETION)
 #-------------------------------------------------------------------------------
 
 $(BIN): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDLIBS)
 
 obj/%.c.o : src/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<

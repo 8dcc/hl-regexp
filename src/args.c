@@ -16,9 +16,6 @@
 #define COL_AFTER "\x1B[0m"
 #endif /* COL_AFTER */
 
-/*
- * TODO: Set to current commit when compiling.
- */
 #ifndef VERSION
 #define VERSION NULL
 #endif /* VERSION */
