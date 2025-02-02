@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-std=c99 -Wall -Wextra -Wpedantic -ggdb3
 LDLIBS=
 
-SRC=main.c
+SRC=main.c args.c
 OBJ=$(addprefix obj/, $(addsuffix .o, $(SRC)))
 
 BIN=hl-regexp
