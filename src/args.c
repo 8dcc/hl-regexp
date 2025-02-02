@@ -128,5 +128,5 @@ void args_parse(int argc, char** argv, struct Args* args) {
         options, parse_opt, args_doc, NULL, NULL, NULL, NULL,
     };
 
-    argp_parse(&argp, argc, argv, 0, 0, &args);
+    argp_parse(&argp, argc, argv, 0, 0, args);
 }
