@@ -20,13 +20,14 @@
 #include <stdbool.h>
 
 /*
- * Used by 'main' to communicate with 'parse_opt'.
+ * Structure filled by 'args_parse' to indicate the program's command-line
+ * arguments.
  */
 struct Args {
     /* Mandatory arguments */
     const char* regexp;
 
-    /* Mandatory arguments */
+    /* Optional arguments */
     const char* before;
     const char* after;
     bool extended_regexp, ignore_case;
